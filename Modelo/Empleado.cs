@@ -21,5 +21,7 @@ namespace CineReservas.Modelo
       }
 
       public override string GetRol() => Cargo;
+
+      public override string ToString() => $"[{IdEmpleado}] {GetNombreCompleto()} - {Cargo}";
    }
 }
