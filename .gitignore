@@ -1,0 +1,88 @@
+## ##########################################
+## Exclusiones específicas de .NET / C#
+## ##########################################
+
+# Carpetas de salida de compilación y binarios
+[Bb]in/
+[Oo]bj/
+[Ex]it/
+
+# Archivos de publicación generados por CLI o Visual Studio
+[Pp]ublish/
+*.[Pp]ublish.xml
+
+# Caché de herramientas de .NET y restauración de NuGet
+.nuget/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+
+# Archivos de rendimiento y profiling
+*.nuget.cache
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## ##########################################
+## Configuración del IDE (Visual Studio / Rider / VS Code)
+## ##########################################
+
+# Visual Studio (Archivos de usuario y temporales)
+.vs/
+.vs-code/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+*.cache
+*.dtb.cache
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+## ##########################################
+## Específico de WinForms y Diseño (Designer)
+## ##########################################
+
+# Archivos de recursos temporales generados por el diseñador
+*.designer.cs.user
+*.resx.user
+
+# Reportes de compilación y logs de diagnóstico
+*.log
+*.aps
+
+## ##########################################
+## Seguridad y Archivos Locales (¡Muy Importante!)
+## ##########################################
+
+# Configuración local de secretos y entornos
+appsettings.Local.json
+appsettings.*.user.json
+*.secrets.json
+.env
+
+## ##########################################
+## Archivos del Sistema Operativo
+## ##########################################
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
