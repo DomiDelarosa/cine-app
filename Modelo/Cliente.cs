@@ -19,6 +19,21 @@ namespace CineReservas.Modelo
       }
 
       public override string GetRol() => "Cliente";
+      
+      public decimal ObtenerDescuento()
+      {
+         switch (TipoMembresia)
+         {
+            case TipoMembresia.Estudiante:
+               return 0.20m;
+
+            case TipoMembresia.VIP:
+               return 0.30m;
+
+            default:
+               return 0.00m;
+         }
+      }
 
       public override string ToString() => $"[{IdCliente}] {GetNombreCompleto()} - {TipoMembresia}";
    }
