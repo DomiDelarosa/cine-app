@@ -17,5 +17,9 @@ namespace CineReservas.Modelo
          FechaRegistro = DateTime.Now;
          TipoMembresia = tipoMembresia;
       }
+
+      public override string GetRol() => "Cliente";
+
+      public override string ToString() => $"[{IdCliente}] {GetNombreCompleto()} - {TipoMembresia}";
    }
-}
+}  

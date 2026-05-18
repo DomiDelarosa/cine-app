@@ -1,6 +1,6 @@
-namespace Modelo
+namespace CineReservas.Modelo
 {
-   public class Persona
+   public abstract class Persona
    {
       public string Nombre { get; set; }
       public string Apellido { get; set; }
@@ -17,5 +17,9 @@ namespace Modelo
       }
 
       public string GetNombreCompleto() => $"{Nombre} {Apellido}";
+
+      public abstract string GetRol();
+
+      public override string ToString() => GetNombreCompleto();
    }
 }
