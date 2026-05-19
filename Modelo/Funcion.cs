@@ -30,23 +30,13 @@ namespace CineReservas.Modelo
 
       public decimal CalcularPrecioConDescuento(decimal descuento) => PrecioBase * (1 - descuento);
 
-      public decimal CalcularPrecioSegunTipoSala()
+      public decimal CalcularPrecioSegunTipoSala() => Sala.TipoSala switch
       {
-         switch (Sala.TipoSala)
-         {
-            case TipoSala.IMAX:
-               return PrecioBase * Constantes.MultiplicadorIMAX;
-
-            case TipoSala.Cuatrodx:
-               return PrecioBase * Constantes.MultiplicadorCuatrodx;
-
-            case TipoSala.VIP:
-               return PrecioBase * Constantes.MultiplicadorVIP;
-
-            default:
-               return PrecioBase;
-         }
-      }
+         TipoSala.IMAX => PrecioBase * Constantes.MultiplicadorIMAX,
+         TipoSala.Cuatrodx => PrecioBase * Constantes.MultiplicadorCuatrodx,
+         TipoSala.VIP => PrecioBase * Constantes.MultiplicadorVIP,
+         _ => PrecioBase
+      };
 
       public override string ToString() => $"{Pelicula.Titulo} — {FechaHora:dd/MM/yyyy HH:mm} | {Sala.Nombre} | ${PrecioBase:F0}";
    }
