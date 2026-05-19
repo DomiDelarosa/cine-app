@@ -37,10 +37,7 @@ Antes de ejecutar el proyecto se necesita:
 
 ```bash
 # Clonar el repositorio
-git clone URL_DEL_REPOSITORIO
+git clone https://github.com/DomiDelarosa/cine-app
 
 # Navegar a la carpeta del proyecto
-cd NombreDelProyecto
-
-# Restaurar dependencias (si aplica)
-dotnet restore 
+cd cine-app
