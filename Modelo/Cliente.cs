@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using CineReservas.Enums;
 using CineReservas.Utilidades;
 
@@ -11,12 +12,15 @@ namespace CineReservas.Modelo
       public int IdCliente { get; private set; }
       public DateTime FechaRegistro { get; private set; }
       public TipoMembresia TipoMembresia { get; set; }
+      public List<Reserva> Reservas { get; private set; }
+      
       protected Cliente(string nombre, string apellido, string email, string telefono, TipoMembresia tipoMembresia) 
                : base(nombre, apellido, email, telefono)
       {
          IdCliente = _contadorId++;
          FechaRegistro = DateTime.Now;
          TipoMembresia = tipoMembresia;
+         Reservas = new List<Reserva>();
       }
 
       public override string GetRol() => "Cliente";
@@ -27,6 +31,9 @@ namespace CineReservas.Modelo
          TipoMembresia.VIP => Constantes.DescuentoVIP,
          _ => 0.00m
       };
+
+      public void AgregarReserva(Reserva reserva)  => Reservas.Add(reserva);
+      public void EliminarReserva(Reserva reserva) => Reservas.Remove(reserva);
 
       public override string ToString() => $"[{IdCliente}] {GetNombreCompleto()} - {TipoMembresia}";
    }
