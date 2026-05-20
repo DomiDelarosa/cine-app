@@ -8,10 +8,11 @@ namespace CineReservas.Modelo
       public string Email { get; set; }
       public string Telefono { get; set; }
 
-      protected Persona(string nombre, string apellido, string email, string telefono)
+      protected Persona(string nombre, string apellido, int edad, string email, string telefono)
       {
          Nombre = nombre;
          Apellido = apellido;
+         Edad = edad;
          Email = email;
          Telefono = telefono;
       }

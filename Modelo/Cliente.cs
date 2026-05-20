@@ -14,8 +14,8 @@ namespace CineReservas.Modelo
       public TipoMembresia TipoMembresia { get; set; }
       public List<Reserva> Reservas { get; private set; }
       
-      protected Cliente(string nombre, string apellido, string email, string telefono, TipoMembresia tipoMembresia) 
-               : base(nombre, apellido, email, telefono)
+      public Cliente(string nombre, string apellido, int edad, string email, string telefono, TipoMembresia tipoMembresia) 
+               : base(nombre, apellido, edad, email, telefono)
       {
          IdCliente = _contadorId++;
          FechaRegistro = DateTime.Now;

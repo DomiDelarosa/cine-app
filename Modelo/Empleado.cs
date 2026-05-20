@@ -11,8 +11,8 @@ namespace CineReservas.Modelo
       public decimal Salario { get; set; }
       public DateTime FechaContratacion { get; private set; }
 
-      protected Empleado(string nombre, string apellido, string email, string telefono, string cargo, decimal salario) 
-               : base(nombre, apellido, email, telefono)
+      public Empleado(string nombre, string apellido, int edad, string email, string telefono, string cargo, decimal salario) 
+               : base(nombre, apellido, edad, email, telefono)
       {
          IdEmpleado = _contadorId++;
          Cargo = cargo;
