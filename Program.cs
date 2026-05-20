@@ -1,11 +1,8 @@
-using System;
-namespace CineReservas;
+using System.Windows.Forms;
+using CineReservas.Vista;
+using CineReservas.Servicios;
 
-static class Program
-{
-    [STAThread]
-    static void Main()
-    {
-        ApplicationConfiguration.Initialize();
-    }    
-}
+Application.EnableVisualStyles();
+Application.SetCompatibleTextRenderingDefault(false);
+GestorReservas gestor = new GestorReservas();
+Application.Run(new MainForm(gestor));
