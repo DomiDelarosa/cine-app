@@ -457,7 +457,7 @@ namespace CineReservas.Vista
                 $"  Asientos:     {codigosAsientos}\n" +
                 (_asientosSeleccionados[0].EsPreferencial ? " ★ Preferencial\n" : "\n") +
                 $"\n" +
-                $"  Precio base:  {Formateador.FormatearPrecio(_funcion.PrecioBase)}\n" +
+                $"  Precio base:  {Formateador.FormatearPrecio(_funcion.PrecioBase * _asientosSeleccionados.Count)}\n" +
                 $"  Descuento:    {Formateador.FormatearPorcentaje(descuento)}\n" +
                 $"  TOTAL:        {Formateador.FormatearPrecio(precio)}\n\n" +
                 "════════════════════════════════";
@@ -465,6 +465,17 @@ namespace CineReservas.Vista
 
         private void BtnConfirmar_Click(object sender, EventArgs e)
         {
+            decimal descuento = _cliente.ObtenerDescuento();
+            decimal precio = _funcion.CalcularPrecioConDescuento(descuento) * _asientosSeleccionados.Count;
+
+            string codigosAsientos = "";
+            for (int i = 0; i < _asientosSeleccionados.Count; i++)
+            {
+                codigosAsientos += _asientosSeleccionados[i].GetCodigo();
+                if (i < _asientosSeleccionados.Count - 1)
+                    codigosAsientos += ", ";
+            } // -REVISAR- Duplicación de codigo con GenerarResumen() para mostrar bien el precio
+
             try
             {
                 var reserva = _gestor.CrearReserva(_cliente, _funcion, _asientosSeleccionados);
@@ -472,7 +483,7 @@ namespace CineReservas.Vista
                 MessageBox.Show(
                     $"✅ Reserva confirmada exitosamente.\n\n" +
                     $"Código: {reserva.CodigoReserva}\n" +
-                    $"Total:  {Formateador.FormatearPrecio(reserva.PrecioFinal)}",
+                    $"Total:  {Formateador.FormatearPrecio(precio)}",
                     "Reserva Exitosa",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
