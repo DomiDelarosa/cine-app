@@ -31,6 +31,54 @@ namespace CineReservas.Modelo
 
       public string GetDuracionFormateada() => Formateador.FormatearDuracion(DuracionMinutos);
 
+      public bool PuedeVerPelicula(int edad)
+      {
+         switch (Clasificacion)
+         {
+            case ClasificacionPelicula.G:
+               return true; // Todas las edades
+
+            case ClasificacionPelicula.PG:
+               return edad >= 7; // Guía parental sugerida
+
+            case ClasificacionPelicula.PG13:
+               return edad >= 13;
+
+            case ClasificacionPelicula.R:
+               return edad >= 17; // Restringida
+
+            case ClasificacionPelicula.NC17:
+               return edad >= 18; // Solo adultos
+
+            default:
+               return false;
+         }
+      }
+
+      public string GetEdadMinima()
+      {
+         switch (Clasificacion)
+         {
+            case ClasificacionPelicula.G: 
+               return "Todas las edades";
+            
+            case ClasificacionPelicula.PG: 
+               return "7+ años";
+            
+            case ClasificacionPelicula.PG13: 
+               return "13+ años";
+            
+            case ClasificacionPelicula.R: 
+               return "17+ años";
+            
+            case ClasificacionPelicula.NC17: 
+               return "18+ años";
+            
+            default: 
+               return "No especificado";
+         }
+      }
+
       public override string ToString() => Titulo;
    }
 }
