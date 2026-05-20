@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using CineReservas.Utilidades;
 
 namespace CineReservas.Modelo
 {
@@ -7,22 +9,25 @@ namespace CineReservas.Modelo
       public string CodigoReserva { get; private set; }
       public Cliente Cliente { get; private set; }
       public Funcion Funcion { get; private set; }
-      public Asiento Asiento { get; private set; }
+      public List<Asiento> Asientos { get; private set; }
       public decimal PrecioFinal { get; private set; }
       public DateTime FechaCreacion { get; private set; }
       public EstadoReserva Estado { get; private set; }
 
-      public Reserva(Cliente cliente, Funcion funcion, Asiento asiento)
+      public Reserva(Cliente cliente, Funcion funcion, List<Asiento> asientos)
       {
          CodigoReserva = GenerarCodigo();
          Cliente = cliente;
          Funcion = funcion;
-         Asiento = asiento;
+         Asientos = asientos;
          FechaCreacion = DateTime.Now;
          Estado = EstadoReserva.Activa;
          PrecioFinal = funcion.CalcularPrecioConDescuento(cliente.ObtenerDescuento());
 
-         asiento.Reservar();
+         foreach (var asiento in asientos)
+         {
+            asiento.Reservar();
+         }
          cliente.AgregarReserva(this);
       }
 
@@ -37,8 +42,11 @@ namespace CineReservas.Modelo
          {
             throw new InvalidOperationException("Solo se pueden cancelar reservas activas.");
          }
+
          Estado = EstadoReserva.Cancelada;
-         Asiento.Liberar();
+         foreach (var asiento in Asientos)
+            asiento.Liberar();
+         
          Cliente.EliminarReserva(this);
       }
 
@@ -55,9 +63,21 @@ namespace CineReservas.Modelo
          $"Cliente:  {Cliente.GetNombreCompleto()} ({Cliente.TipoMembresia})\n" +
          $"Película: {Funcion.Pelicula.Titulo}\n" +
          $"Función:  {Funcion.FechaHora:dd/MM/yyyy HH:mm}\n" +
-         $"Sala:     {Funcion.Sala.Nombre} | Asiento: {Asiento.GetCodigo()}\n" +
-         $"Total:    ${PrecioFinal:F0} | Estado: {Estado}";
+         $"Sala:     {Funcion.Sala.Nombre} | Asiento: {Asientos[0].GetCodigo()}\n" +
+         $"Total:    ${Formateador.FormatearPrecio(PrecioFinal)} | Estado: {Estado}";
+         
+      private string ObtenerCodigosAsientos()
+      {
+         string codigos = "";
+         for (int i = 0; i < Asientos.Count; i++)
+         {
+            codigos += Asientos[i].GetCodigo();
+            if (i < Asientos.Count - 1)
+               codigos += ", ";
+         }
+         return codigos;
+      }
 
-      public override string ToString() => $"{CodigoReserva} — {Funcion.Pelicula.Titulo} — {Asiento.GetCodigo()} — ${PrecioFinal:F0} [{Estado}]";
+      public override string ToString() => $"{CodigoReserva} — {Funcion.Pelicula.Titulo} — {ObtenerCodigosAsientos()} — ${Formateador.FormatearPrecio(PrecioFinal)} [{Estado}]";
    }
 }
