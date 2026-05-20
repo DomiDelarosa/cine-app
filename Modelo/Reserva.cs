@@ -63,10 +63,12 @@ namespace CineReservas.Modelo
          $"Cliente:  {Cliente.GetNombreCompleto()} ({Cliente.TipoMembresia})\n" +
          $"Película: {Funcion.Pelicula.Titulo}\n" +
          $"Función:  {Funcion.FechaHora:dd/MM/yyyy HH:mm}\n" +
-         $"Sala:     {Funcion.Sala.Nombre} | Asiento: {Asientos[0].GetCodigo()}\n" +
-         $"Total:    ${Formateador.FormatearPrecio(PrecioFinal)} | Estado: {Estado}";
-         
-      private string ObtenerCodigosAsientos()
+         $"Sala:     {Funcion.Sala.Nombre}\n" +
+         $"Asientos: {ObtenerCodigosAsientos()}\n" +
+         $"Total:    ${Formateador.FormatearPrecio(PrecioFinal)}\n" +
+         $" Estado: {Estado}";
+
+      public string ObtenerCodigosAsientos()
       {
          string codigos = "";
          for (int i = 0; i < Asientos.Count; i++)
