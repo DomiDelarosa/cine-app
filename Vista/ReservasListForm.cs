@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using CineReservas.Modelo;
 using CineReservas.Servicios;
 using CineReservas.Utilidades;
+using CineReservas.Enums;
 
 namespace CineReservas.Vista
 {

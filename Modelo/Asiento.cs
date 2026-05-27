@@ -1,3 +1,5 @@
+using CineReservas.Enums;
+
 namespace CineReservas.Modelo
 {
    public class Asiento

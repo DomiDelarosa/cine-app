@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CineReservas.Utilidades;
+using CineReservas.Enums;
 
 namespace CineReservas.Modelo
 {
