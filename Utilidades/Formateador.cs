@@ -8,8 +8,6 @@ namespace CineReservas.Utilidades
 
       public static string FormatearFechaHora(DateTime fecha) => fecha.ToString("dd/MM/yyyy HH:mm");
 
-      public static string FormatearFecha(DateTime fecha) => fecha.ToString("dd/MM/yyyy");
-
       public static string FormatearDuracion(int minutos)
       {
          int h = minutos / 60;
