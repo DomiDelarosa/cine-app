@@ -109,10 +109,7 @@ namespace CineReservas.Vista
             item.SubItems.Add(r.Funcion.Pelicula.Titulo);
             item.SubItems.Add(Formateador.FormatearFechaHora(r.Funcion.FechaHora));
 
-            string codigos = "";
-            foreach (Asiento a in r.Asientos)
-               codigos += a.GetCodigo() + " ";
-            item.SubItems.Add(codigos.Trim());
+            item.SubItems.Add(r.ObtenerCodigosAsientos());
 
             item.SubItems.Add(Formateador.FormatearPrecio(r.PrecioFinal));
             item.SubItems.Add(r.Estado.ToString());
@@ -139,20 +136,22 @@ namespace CineReservas.Vista
          }
 
          var reserva = listView.SelectedItems[0].Tag as Reserva;
-         if (reserva.Estado != EstadoReserva.Activa)
-         {
-            MessageBox.Show("Solo se pueden cancelar reservas activas.", "Atención",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            return;
-         }
 
          if (MessageBox.Show($"¿Cancelar la reserva {reserva.CodigoReserva}?",
                               "Confirmar", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
          {
-            _gestor.CancelarReserva(reserva.CodigoReserva);
-            CargarReservas();
-            MessageBox.Show("Reserva cancelada.", "Éxito",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+               _gestor.CancelarReserva(reserva.CodigoReserva);
+               CargarReservas();
+               MessageBox.Show("Reserva cancelada.", "Éxito",
+                               MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+               MessageBox.Show(ex.Message, "Atención",
+                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
          }
       }
    }
