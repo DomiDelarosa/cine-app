@@ -14,11 +14,14 @@ namespace CineReservas.Modelo
       public Pelicula Pelicula { get; set; }
       public Sala Sala { get; set; }
 
-      public bool EstaActiva => FechaHora > DateTime.Now;
+      public bool EstaActiva => Validador.EsFechaFutura(FechaHora);
       public int LugaresDisponibles => Sala.GetCantidadDisponibles();
 
       public Funcion(Pelicula pelicula, Sala sala, DateTime fechaHora, decimal precioBase)
       {
+         if (!Validador.EsPrecioValido(precioBase))
+            throw new ArgumentException("El precio base debe ser mayor a cero.");
+            
          IdFuncion = _contadorId++;
          Pelicula = pelicula;
          Sala = sala;
@@ -38,6 +41,6 @@ namespace CineReservas.Modelo
          _ => PrecioBase
       };
 
-      public override string ToString() => $"{Pelicula.Titulo} — {FechaHora:dd/MM/yyyy HH:mm} | {Sala.Nombre} | ${PrecioBase:F0}";
+      public override string ToString() => $"{Pelicula.Titulo} — {Formateador.FormatearFechaHora(FechaHora)} | {Sala.Nombre} | {Formateador.FormatearPrecio(PrecioBase)}";
    }
 }

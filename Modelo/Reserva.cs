@@ -22,7 +22,7 @@ namespace CineReservas.Modelo
          Asientos = asientos;
          FechaCreacion = DateTime.Now;
          Estado = EstadoReserva.Activa;
-         PrecioFinal = funcion.CalcularPrecioConDescuento(cliente.ObtenerDescuento());
+         PrecioFinal = funcion.CalcularPrecioConDescuento(cliente.ObtenerDescuento()) * asientos.Count;
 
          foreach (var asiento in asientos)
          {
