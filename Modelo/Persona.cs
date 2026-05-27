@@ -1,3 +1,6 @@
+using System;
+using CineReservas.Utilidades;
+
 namespace CineReservas.Modelo
 {
    public abstract class Persona
@@ -10,6 +13,9 @@ namespace CineReservas.Modelo
 
       protected Persona(string nombre, string apellido, int edad, string email, string telefono)
       {
+         if (!Validador.EsEdadValida(edad))
+            throw new ArgumentException($"La edad debe estar entre {Constantes.EdadMinima} y {Constantes.EdadMaxima} años.");
+            
          Nombre = nombre;
          Apellido = apellido;
          Edad = edad;
