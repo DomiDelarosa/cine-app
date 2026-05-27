@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using CineReservas.Modelo;
 using CineReservas.Enums;
+using CineReservas.Utilidades;
 
 namespace CineReservas.Servicios
 {
@@ -72,6 +73,9 @@ namespace CineReservas.Servicios
 
       public Reserva CrearReserva(Cliente cliente, Funcion funcion, List<Asiento> asientos)
       {
+         if (cliente.Reservas.Count >= Constantes.MaxReservasPorCliente)
+            throw new InvalidOperationException($"El cliente ya alcanzó el límite de {Constantes.MaxReservasPorCliente} reservas.");
+
          foreach (Asiento a in asientos)
          {
             if (!a.EstaDisponible())
@@ -79,9 +83,7 @@ namespace CineReservas.Servicios
          }
 
          if (!funcion.Pelicula.PuedeVerPelicula(cliente.Edad))
-         {
-            throw new InvalidOperationException($"El cliente debe tener al menos {funcion.Pelicula.GetEdadMinima()} para ver '{funcion.Pelicula.Titulo}' ({funcion.Pelicula.Clasificacion}).");
-         }
+            throw new InvalidOperationException($"El cliente debe tener al menos {funcion.Pelicula.GetEdadMinima()} años para ver '{funcion.Pelicula.Titulo}' ({funcion.Pelicula.Clasificacion}).");
 
          Reserva reserva = new Reserva(cliente, funcion, asientos);
          Reservas.Add(reserva);
@@ -91,7 +93,9 @@ namespace CineReservas.Servicios
       public bool CancelarReserva(string codigoReserva)
       {
          Reserva reserva = BuscarReservaPorCodigo(codigoReserva);
-         if (reserva == null) return false;
+         if (reserva == null)
+            throw new InvalidOperationException($"No se encontró la reserva con código '{codigoReserva}'.");
+
          reserva.Cancelar();
          return true;
       }
