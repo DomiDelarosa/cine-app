@@ -28,7 +28,6 @@ namespace CineReservas.Servicios
       }
 
       // Datos semilla
-
       private void CargarDatosSemilla()
       {
          // Películas
@@ -52,14 +51,15 @@ namespace CineReservas.Servicios
          Salas.Add(new Sala("Sala IMAX", TipoSala.IMAX, 10, 12));
          Salas.Add(new Sala("Sala VIP", TipoSala.VIP, 5, 8));
 
-         // Funciones
+         // Funciones — precio base Estandar: 18000, IMAX: *1.5, VIP: *2.0
+         decimal precioEstandar = 18000m;
          DateTime ahora = DateTime.Now;
-         Funciones.Add(new Funcion(Peliculas[0], Salas[0], ahora.AddHours(2), 18000m));
-         Funciones.Add(new Funcion(Peliculas[0], Salas[1], ahora.AddHours(5), 27000m));
-         Funciones.Add(new Funcion(Peliculas[1], Salas[0], ahora.AddHours(3), 18000m));
-         Funciones.Add(new Funcion(Peliculas[1], Salas[2], ahora.AddHours(6), 36000m));
-         Funciones.Add(new Funcion(Peliculas[2], Salas[0], ahora.AddHours(1), 18000m));
-         Funciones.Add(new Funcion(Peliculas[2], Salas[1], ahora.AddDays(1), 27000m));
+         Funciones.Add(new Funcion(Peliculas[0], Salas[0], ahora.AddHours(2), precioEstandar));
+         Funciones.Add(new Funcion(Peliculas[0], Salas[1], ahora.AddHours(5), precioEstandar * Constantes.MultiplicadorIMAX));
+         Funciones.Add(new Funcion(Peliculas[1], Salas[0], ahora.AddHours(3), precioEstandar));
+         Funciones.Add(new Funcion(Peliculas[1], Salas[2], ahora.AddHours(6), precioEstandar * Constantes.MultiplicadorVIP));
+         Funciones.Add(new Funcion(Peliculas[2], Salas[0], ahora.AddHours(1), precioEstandar));
+         Funciones.Add(new Funcion(Peliculas[2], Salas[1], ahora.AddDays(1), precioEstandar * Constantes.MultiplicadorIMAX));
 
          // Clientes 
          Clientes.Add(new Cliente("Ana", "García", 19, "ana@mail.com", "3001234567", TipoMembresia.VIP));
@@ -70,7 +70,6 @@ namespace CineReservas.Servicios
       }
 
       // Reservas
-
       public Reserva CrearReserva(Cliente cliente, Funcion funcion, List<Asiento> asientos)
       {
          if (cliente.Reservas.Count >= Constantes.MaxReservasPorCliente)
@@ -90,14 +89,20 @@ namespace CineReservas.Servicios
          return reserva;
       }
 
-      public bool CancelarReserva(string codigoReserva)
+      public void CancelarReserva(string codigoReserva)
       {
          Reserva reserva = BuscarReservaPorCodigo(codigoReserva);
          if (reserva == null)
             throw new InvalidOperationException($"No se encontró la reserva con código '{codigoReserva}'.");
-
          reserva.Cancelar();
-         return true;
+      }
+
+      public void CompletarReserva(string codigoReserva)
+      {
+         Reserva reserva = BuscarReservaPorCodigo(codigoReserva);
+         if (reserva == null)
+            throw new InvalidOperationException($"No se encontró la reserva con código '{codigoReserva}'.");
+         reserva.Completar();
       }
 
       public Reserva BuscarReservaPorCodigo(string codigo)
@@ -110,8 +115,13 @@ namespace CineReservas.Servicios
          return null;
       }
 
-      // Clientes
+      public decimal CalcularPrecioTotal(Cliente cliente, Funcion funcion, List<Asiento> asientos)
+      {
+         decimal descuento = cliente.ObtenerDescuento();
+         return funcion.CalcularPrecioConDescuento(descuento) * asientos.Count;
+      }
 
+      // Clientes
       public Cliente RegistrarCliente(string nombre, string apellido, int edad, string email,
                                       string telefono, TipoMembresia tipo)
       {
@@ -121,7 +131,6 @@ namespace CineReservas.Servicios
       }
 
       // Consultas
-
       public List<Funcion> GetFuncionesPorPelicula(Pelicula pelicula)
       {
          List<Funcion> resultado = new List<Funcion>();
