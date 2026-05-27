@@ -6,7 +6,7 @@ namespace CineReservas.Modelo
    {
       public string Fila { get; private set; }
       public int Numero { get; private set; }
-      public EstadoAsiento Estado { get; set; }
+      public EstadoAsiento Estado { get; private set; }
       public bool EsPreferencial { get; set; }
 
       public Asiento(string fila, int numero, bool esPreferencial = false)
