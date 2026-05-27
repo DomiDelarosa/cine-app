@@ -6,6 +6,10 @@ namespace CineReservas.Utilidades
       public const decimal DescuentoEstudiante = 0.20m;
       public const decimal DescuentoVIP = 0.30m;
 
+      // Edad mínima y máxima
+      public const int EdadMinima = 1;
+      public const int EdadMaxima = 120;
+
       // Multiplicadores de precio por tipo de sala
       public const decimal MultiplicadorIMAX = 1.5m;
       public const decimal MultiplicadorCuatrodx = 1.8m;

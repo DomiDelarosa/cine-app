@@ -13,6 +13,11 @@ namespace CineReservas.Utilidades
                 email.Contains('.');
       }
 
+      public static bool EsEdadValida(int edad)
+      {
+         return edad >= Constantes.EdadMinima && edad <= Constantes.EdadMaxima;
+      }
+
       public static bool EsTelefonoValido(string telefono)
       {
          if (string.IsNullOrWhiteSpace(telefono))

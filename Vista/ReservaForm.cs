@@ -380,7 +380,7 @@ namespace CineReservas.Vista
                     return false;
                 }
 
-                if (!int.TryParse(txtEdad.Text, out int edad) || edad < 1 || edad > 120)
+                if (!int.TryParse(txtEdad.Text, out int edad) || !Validador.EsEdadValida(edad))
                 {
                     MsgError("Ingrese una edad válida (entre 1 y 120 años).");
                     return false;
