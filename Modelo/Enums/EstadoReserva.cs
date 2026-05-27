@@ -1,4 +1,4 @@
-namespace CineReservas.Modelo
+namespace CineReservas.Enums
 {
    public enum EstadoReserva
    {
