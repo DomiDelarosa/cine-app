@@ -18,8 +18,8 @@ Un cine local necesita modernizar su sistema de asignación de asientos. Actualm
 * Eliminar o cancelar reservas.
 * Calcular el costo total de la reserva aplicando recargos por tipos de entrada (ej. VIP o Estándar).
 
-## Posibles futuras integraciones
-* Persistencia de datos con JSON
+### Posibles futuras integraciones
+* Persistencia de datos con SQL Server
 * Insertar peliculas.
 * Crear y eliminar funciones.
 * Desarrollo de área de alimentos y accesorios.
@@ -41,16 +41,21 @@ Antes de ejecutar el proyecto se necesita:
 
 ## Instalación
 
-```bash
+```
 # Clonar el repositorio
 git clone https://github.com/DomiDelarosa/CinemaRes
 
 # Navegar a la carpeta del proyecto
 cd CinemaRes
+```
+## Estructura de proyecto
 
-|CinemaRes
-|--Modelo
-   |---
-|--Servicios
-|--Vista
-|--Utilidades
+```
+├───docs
+│   └───captures
+├───Modelo
+│   └───Enums
+├───Servicios
+├───Utilidades
+└───Vista
+```
