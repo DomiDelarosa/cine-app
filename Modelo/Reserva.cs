@@ -40,23 +40,26 @@ namespace CineReservas.Modelo
       public void Cancelar()
       {
          if (Estado != EstadoReserva.Activa)
-         {
             throw new InvalidOperationException("Solo se pueden cancelar reservas activas.");
-         }
+
+         if ((Funcion.FechaHora - DateTime.Now).TotalMinutes < Constantes.MinutosAntesCancelacion)
+            throw new InvalidOperationException($"No se puede cancelar con menos de {Constantes.MinutosAntesCancelacion} minutos de anticipación.");
 
          Estado = EstadoReserva.Cancelada;
          foreach (var asiento in Asientos)
             asiento.Liberar();
-         
+
          Cliente.EliminarReserva(this);
       }
 
       public void Completar()
       {
-         if (Estado == EstadoReserva.Activa)
-         {
-            Estado = EstadoReserva.Completada;
-         }
+         if (Estado != EstadoReserva.Activa)
+            throw new InvalidOperationException("Solo se pueden completar reservas activas.");
+
+         Estado = EstadoReserva.Completada;
+         foreach (var asiento in Asientos)
+            asiento.Ocupar();
       }
 
       public string GetResumen() =>
@@ -81,6 +84,6 @@ namespace CineReservas.Modelo
          return codigos;
       }
 
-      public override string ToString() => $"{CodigoReserva} — {Funcion.Pelicula.Titulo} — {ObtenerCodigosAsientos()} — {Formateador.FormatearPrecio(PrecioFinal)} [{Estado}]";
+      public override string ToString() => $"{CodigoReserva} — {Funcion.Pelicula.Titulo} — {ObtenerCodigosAsientos()} — ${Formateador.FormatearPrecio(PrecioFinal)} [{Estado}]";
    }
 }
