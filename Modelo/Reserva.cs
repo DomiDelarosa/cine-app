@@ -84,6 +84,6 @@ namespace CineReservas.Modelo
          return codigos;
       }
 
-      public override string ToString() => $"{CodigoReserva} — {Funcion.Pelicula.Titulo} — {ObtenerCodigosAsientos()} — ${Formateador.FormatearPrecio(PrecioFinal)} [{Estado}]";
+      public override string ToString() => $"{CodigoReserva} — {Funcion.Pelicula.Titulo} — {ObtenerCodigosAsientos()} — {Formateador.FormatearPrecio(PrecioFinal)} [{Estado}]";
    }
 }
